@@ -1,0 +1,22 @@
+body {
+  padding-top: 70px;
+  padding-bottom: 30px;
+}
+.theme-showcase .navbar .container {
+  width: auto;
+}
+.navbar-header .navbar-brand {text-transform: uppercase;}
+.table a.table-link {
+	font-size: 1.125em;
+	color: #03a9f4;
+	text-decoration: none;
+}
+.table a.table-link:hover {
+	color: #2980b9;
+}
+.table a.table-link.danger {
+	color: #e84e40;
+}
+.table .img-thumbnail {
+	max-height: 200px;
+}
