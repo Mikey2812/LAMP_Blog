@@ -38,6 +38,10 @@ $.widget.bridge('uibutton', $.ui.button)
 <script src="<?php echo LibsURI; ?>Admin_LTE/dist/js/adminlte.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="<?php echo LibsURI; ?>Admin_LTE/dist/js/pages/dashboard.js"></script>
+<!-- Toastr-->
+<script src="<?php echo LibsURI; ?>Admin_LTE/plugins/toastr/toastr.min.js"></script>
+<script src="<?php echo MediaURI; ?>admin/js/form.js"></script>
+<?php echo vendor_html_helper::_jsFooter(); ?>
 </body>
 
 </html>

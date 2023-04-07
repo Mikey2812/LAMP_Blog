@@ -29,6 +29,11 @@
     <link rel="stylesheet" href="<?php echo LibsURI; ?>Admin_LTE/plugins/daterangepicker/daterangepicker.css">
     <!-- summernote -->
     <link rel="stylesheet" href="<?php echo LibsURI; ?>Admin_LTE/plugins/summernote/summernote-bs4.min.css">
+    <!-- Toast -->
+    <link rel="stylesheet" href="<?php echo LibsURI; ?>Admin_LTE/plugins/toastr/toastr.min.css">
+    <script type="text/javascript">
+    var rootUrl = "<?=RootURL;?>";
+    </script>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">

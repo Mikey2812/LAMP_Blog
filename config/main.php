@@ -37,8 +37,7 @@
 
 	$app['role_accounts'] = [
 		'1'=>'Admin',
-		'2'=>'Leader',
-		'3'=>'User'
+		'2'=>'User'
 	];
 
 	$app['status'] = [

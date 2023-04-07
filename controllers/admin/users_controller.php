@@ -25,8 +25,8 @@
         }
 
         public function add() {
-            if(isset($_POST['btn_submit'])) {
             $um = user_model::getInstance();
+            if(isset($_POST['btn_submit'])) {
                 $userData = $_POST['user'];
                 if($_FILES['image']['tmp_name'])
                     $userData['avatar'] = $this->uploadImg($_FILES);
@@ -81,39 +81,11 @@
             $this->display();
         }
 
-        public function trash() {
-            global $app;
-            $id = $app['prs'][1];
-            $um = user_model::getInstance();
-            $userData['status'] = 0;
-            $status=explode("/",$_GET["pr"])[4]==0?1:0;
-
-            if($um->editRecords($id, ["status" => $status] , "role != 1")) echo "Successful handle!";
-            else echo "error";
-        }
-
-        public function del($id) {
-            $um = user_model::getInstance();
-            if($um->delRelativeRecord($id, "role != 1")) echo "Delete Successful";
-            else echo "error";
-        }
-
-        public function trashmany() {
-            global $app;
-            $ids = $app['prs']['ids'];
-            $um = user_model::getInstance();
-            $userData['status'] = 0;
-            if($um->editRecords($ids, $userData, "role != 1")) echo "Move many to trash successful";
-            else echo "error";
-        }
-
-        public function delmany() {
-            global $app;
-            $ids = $app['prs']['ids'];
-            $um = user_model::getInstance();
-            if($um->delRelativeRecords($ids)) echo "Delete many successful";
-            else echo "error";
-        }
+        // public function del($id) {
+        //     $um = user_model::getInstance();
+        //     if($um->delRelativeRecord($id, "role != 1")) echo "Delete Successful";
+        //     else echo "error";
+        // }
 
         public function profile() {
             $um = new user_model();
@@ -138,29 +110,6 @@
                 echo json_encode(['status'=>0, 'message'=>'Current password not match!']);
             }
             exit;
-        }
-
-        public function search_users(){
-            $um = user_model::getInstance();
-            $conditions  = "";
-            $search_term = isset($_GET['q']) ? $_GET['q'] : '';
-            $conditions .= " role in (1,2,3,4,5)";
-            $conditions .= " and (CONCAT(TRIM(users.firstname),\" \",TRIM(users.lastname)) like '%".$search_term."%'";
-            $conditions .= " or CONCAT(TRIM(users.lastname),\" \",TRIM(users.firstname)) like '%".$search_term."%'";
-            $conditions .= " or TRIM(users.firstname) like '%".$search_term."%'";
-            $conditions .= " or users.email like '%".$search_term."%') ";
-
-            $options['conditions'] = $conditions;
-            $options = [
-                'conditions' => $conditions,
-                'order' => 'firstname ASC',
-            ];
-            $result = $um->allp('*',$options);
-            $data['incomplete_results'] = false ;
-            $data['items'] = $result['data'];
-            $data['page'] = $result['curp'];
-            $data['total_count'] = $result['norecords'];
-            echo json_encode($data);
         }
     }
 ?>

@@ -137,6 +137,7 @@ class vendor_main_model {
 			$limit = " LIMIT $this->nopp OFFSET ".($this->curp-1)*$this->nopp;
 		}
 
+		
 		$sql = "SELECT ".$fields." FROM ".$this->table.$join.$conditions.$group.$order.$limit;
 		return $this->con->query($sql);
 	}

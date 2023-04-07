@@ -125,7 +125,7 @@
                 <label class="control-label col-md-3" for="avatar">Avatar</label>
                 <div class="controls col-md-7">
                     <?php if($app['act'] !='add'){ ?>
-                    <?php if(isset($this->record['avatar'])) { ?>
+                    <?php if(isset($this->record)) { ?>
                     <img src="<?php echo UploadURI.$app['ctl'].'/'.$this->record['avatar']; ?>">
                     <?php } ?>
                     <?php } ?>
@@ -144,7 +144,7 @@
                 <div class="controls col-md-7">
                     <?php if($app['act'] !='view'){ ?>
                     <select name="user[role]" id="input-role" class="form-control">
-                        <?php foreach ($app['roles'] as $k => $v) { ?>
+                        <?php foreach ($app['role_accounts'] as $k => $v) { ?>
                         <option value="<?=$k;?>"
                             <?=(isset($this->record['role']) && $this->record['role']==$k)? 'selected="selected"':'';?>>
                             <?=$v;?></option>
@@ -152,7 +152,7 @@
                     </select>
                     <?php } else { ?>
                     <input disabled type="text" id="role" name="user[role]" class="form-control"
-                        value="<?php if(isset($this->record['role'])) echo $app['roles'][$this->record['role']]; ?>">
+                        value="<?php if(isset($this->record['role'])) echo $app['role_accounts'][$this->record['role']]; ?>">
                     <?php } ?>
                     <?php if( isset($this->errors['role'])) { ?>
                     <p class="text-danger"><?=$this->errors['role']; ?></p>

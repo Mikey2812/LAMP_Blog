@@ -3,6 +3,7 @@ class vendor_backend_controller extends vendor_crud_controller {
 	protected $records;
 	protected $record;
 	protected $errors;
+
 	public function __construct() {
 		$this->checkRole();
 		parent::__construct();
