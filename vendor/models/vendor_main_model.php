@@ -100,8 +100,7 @@ class vendor_main_model {
 		if($fields=='*') $fields = $this->table.".*";
 		$join = "";
 		$conditions = (isset($options['conditions']) && $options['conditions'])? $options['conditions']: '';
-
-		if(isset($this->relationships) && (isset($options['joins']) && $options['joins'])) {
+		if(isset($this->relationships) && (isset($options['joins']) && $options['joins'])) {	
 			$joinR = $this->addJoins($options);
 			$join =	$joinR['join'];
 			$fields .= $joinR['joinFields'];;
@@ -110,7 +109,6 @@ class vendor_main_model {
 			$conditions = $conditions? $this->conditionsJoin($conditions):"";
 		}
 		$conditions = $conditions? ' WHERE '.$conditions: "";
-
 		$group = "";
 		if(isset($options['group'])) {
 			$group = " GROUP BY ";

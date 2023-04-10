@@ -16,9 +16,6 @@ class topics_controller extends vendor_backend_controller
             // }
 
             $tm = topic_model::getInstance();
-            //old
-            // $this->records = $tm->allp('*', ['conditions'=>$conditions, 'joins'=>false]);
-            //new 
             $this->records = $tm->allp('*', ['conditions'=>$conditions, 'joins'=>false]);
             $this->display();
         }

@@ -16,9 +16,6 @@ class posts_controller extends vendor_backend_controller
             // }
 
             $pm = post_model::getInstance();
-            //old
-            // $this->records = $pm->allp('*', ['conditions'=>$conditions, 'joins'=>false]);
-            //new 
             $this->records = $pm->allp('*', ['conditions'=>$conditions, 'joins'=>['topic','user']]);
             $this->display();
         }

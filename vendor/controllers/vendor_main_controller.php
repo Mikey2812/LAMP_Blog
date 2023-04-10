@@ -8,6 +8,8 @@ class vendor_main_controller {
 	public	 	$components;
 	protected 	$allowedExts = ["gif", "jpeg", "jpg", "png"];
 	protected 	$isMobile;
+	protected 	$records;
+	protected 	$record;
 
 	public function  __construct() {
 		global $app;

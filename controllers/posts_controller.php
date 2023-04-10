@@ -1,5 +1,5 @@
 <?php
-	class home_controller extends vendor_main_controller {
+	class posts_controller extends vendor_main_controller {
 		public function index() {
 			$pm = post_model::getInstance();
 			$conditions = '';

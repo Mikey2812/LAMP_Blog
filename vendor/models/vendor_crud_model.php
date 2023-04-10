@@ -216,7 +216,7 @@ class vendor_crud_model extends vendor_main_model {
 		}
 		if($conditions)	$conditions = ' and '.$conditions;
 		$query = "UPDATE $this->table SET $setDatas WHERE id='$id'".$conditions;
-		//echo($query);
+		echo($query);
 		if(mysqli_query($this->con,$query))
 			return true;
 		else {
@@ -243,7 +243,7 @@ class vendor_crud_model extends vendor_main_model {
 		}
 		if($conditions)	$conditions = ' and '.$conditions;
 		$ids = vendor_html_helper::processSQLString($ids);
-	$query = "UPDATE $this->table SET $setDatas WHERE id IN($ids)".$conditions;
+		$query = "UPDATE $this->table SET $setDatas WHERE id IN($ids)".$conditions;
 		if(mysqli_query($this->con,$query))
 			return true;
 		else {
