@@ -1,16 +1,16 @@
 <?php
     global $mediaFiles;
-    array_push($mediaFiles['css'], RootREL.'media/css/posts.css');
+    array_push($mediaFiles['css'], RootREL.'media/css/posts.css'); 
 ?>
 <?php include_once 'views/layout/'.$this->layout.'header.php'; ?>
 <div class="content">
-    <h1>Blog</h1><br />
+    <h1>Most Viewer</h1><br />
     <div class="row">
         <?php if(count($this->records['data'])) { ?>
         <?php foreach ($this->records['data'] as $record) { ?>
         <div class="post-item col-4 d-flex align-items-stretch flex-column">
             <a class="text-decoration-none"
-                href="<?php echo (vendor_app_util::url(["ctl"=>"home", "act"=>"view/".$record['id']])) ?>">
+                href="<?php echo (vendor_app_util::url(["ctl"=>"posts", "act"=>"view/".$record['id']])) ?>">
                 <img class="blog-img w-100 rounded-4" style="height:300px"
                     src="<?=UploadURI.'posts/'.(($record['image'])? $record['image']: 'no_picture.png'); ?>">
                 <h3 class="blog-title mt-3"><?php echo $record['title']?></h3>
@@ -25,7 +25,8 @@
                 <p class="me-3 likes"><i
                         class="icon-like fa-solid fa-thumbs-up me-1"></i><?php echo $record['number_like'] ?>
                 </p>
-                <p class="me-2"><i class="fa-regular fa-comment me-1"></i>0</p>
+                <p class="me-2"><i class="fa-regular fa-comment me-1"></i></i><?php echo $record['number_comment'] ?>
+                </p>
             </div>
         </div>
         <?php } ?>

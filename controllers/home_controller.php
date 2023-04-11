@@ -3,8 +3,8 @@
 		public function index() {
 			$pm = post_model::getInstance();
 			$conditions = '';
-			$this->records = $pm->allp('*',['conditions'=>$conditions, 'joins'=>['user','comment']]);
-			// $this->display();
+			$this->records = $pm->allp('*',['conditions'=>$conditions, 'joins'=>['user'], 'order' => 'view DESC',
+			 'pagination' => ['nopp' => '3']]);
 			$this->display();
 		}
 		public function view($id) {

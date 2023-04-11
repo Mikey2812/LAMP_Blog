@@ -1,0 +1,1 @@
+<?php include_once 'views/posts/index.php'; ?>

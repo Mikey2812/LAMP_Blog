@@ -1,4 +1,12 @@
 $(document).ready(function () {
+    // $.ajax({
+    //     type: "POST",
+    //     url: "session.php",
+    //     data: { action: "get_session" },
+    //     success: function (response) {
+    //         alert(response);
+    //     }
+    // });
     $('.icon-like').click(function (e) {
         let number_like = Number($(this).parent().text());
         if ($(this).hasClass("active")) {
