@@ -1,3 +1,7 @@
+.post-item {
+    background-color: aliceblue;
+}
+
 .post-item:hover .blog-img {
     transform: scale(1.05);
     transition: all .4s linear;
@@ -10,6 +14,29 @@
 .blog-title {
     color: #009F75;
     min-height: 120px;
+}
+
+.comment-items {
+    padding: 1rem;
+}
+
+.form-comment-items {
+    padding: 1rem;
+}
+
+.btn-reply {
+    color: #000;
+    background-color: #FFF;
+    text-decoration: none;
+}
+
+.btn-reply:hover span {
+    text-decoration: underline;
+    color: red;
+}
+
+.btn-reply:hover i {
+    color: red;
 }
 
 .icon-like.active,

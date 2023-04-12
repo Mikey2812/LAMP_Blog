@@ -1,6 +1,6 @@
 </div><!-- /.container -->
 <!-- FOOTER -->
-<footer class="footer-section">
+<footer class="footer-section mt-3">
     <div class="container">
         <div class="footer-cta pt-5 ">
             <div class="row">

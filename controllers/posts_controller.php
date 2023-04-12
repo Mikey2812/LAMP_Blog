@@ -25,7 +25,8 @@
 			$this->comments = $cm->allp('*',
 										['conditions'=> $conditions, 
 										'joins'=>['user'],
-										'get-child'=>true]);
+										'get-child'=>true,
+										'order' => 'path ASC']);
 
 			$pm->addViews($id[1]);
 			$this->display();

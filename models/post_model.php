@@ -19,6 +19,11 @@
 			mysqli_query($this->con,$query);
         }
 
+        public function addComments ($id) {
+            $query = "UPDATE posts SET "."number_comment = number_comment + 1"." WHERE id='$id'";
+			mysqli_query($this->con,$query);
+        }
+
         public function getTopics () {
             $query = "SELECT * FROM topics ORDER BY ID DESC";
             return mysqli_query($this->con,$query);
