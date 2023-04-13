@@ -1,5 +1,9 @@
 </div><!-- /.container -->
 <!-- FOOTER -->
+<div class="required_login position-absolute top-50 start-50 bg-light d-none">
+    <p>You must login ....</p>
+    <a href="">Login now</a>
+</div>
 <footer class="footer-section mt-3">
     <div class="container">
         <div class="footer-cta pt-5 ">
@@ -122,6 +126,7 @@
 <script src="<?php echo LibsURI; ?>ckeditor/ckeditor.js"></script>
 <script src="<?php echo LibsURI; ?>Admin_LTE/plugins/jquery/jquery.min.js"></script>
 <script src="<?php echo LibsURI; ?>bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="<?php echo LibsURI; ?>Admin_LTE/plugins/toastr/toastr.min.js"></script>
 <script src="https://kit.fontawesome.com/d8d2839d44.js" crossorigin="anonymous"></script>
 <?php echo vendor_html_helper::_jsFooter(); ?>
 

@@ -9,11 +9,11 @@
 						];
 
 		protected $relationships = [
-			/*
 			'hasMany'	=>	[
-				['project', 'key'=>'user_id',	'on_del'=>false],		
+				['post', 'key'=>'user_id'],
+				['comment', 'key'=>'user_id'],		
+				['like', 'key'=>'user_id'],		
 			]
-			*/
 		];
 
 		public function rules() {

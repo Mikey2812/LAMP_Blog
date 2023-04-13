@@ -5,7 +5,6 @@
 <?php include_once 'views/layout/'.$this->layout.'header.php'; ?>
 <?php require 'controllers/config_controller.php'; ?>
 <div class="content">
-    <?php $arrayID = filterPostID($this->likes['data']); ?>
     <div class="d-flex justify-content-between">
         <h1 class="mt-5">List Blog</h1>
         <a href="<?php echo vendor_app_util::url(['ctl'=>'posts', 'act'=>'add']); ?>"
@@ -29,13 +28,9 @@
                     </p>
                 </div>
                 <div class="posts-information d-flex justify-content-end">
-                    <p class="posts-view me-3"><i class="fa-regular fa-eye me-1"></i><?php echo $record['view'] ?></p>
-                    <span class="btn-like me-3<?php if(isset($_SESSION['user']['id']) 
-                                    && in_array($record['id'], $arrayID)){
-                                        echo ' active';
-                                    } ?>" alt="<?php echo $record['id']?>">
-                        <i class="icon-like fa-solid fa-thumbs-up me-1">
-                        </i>
+                    <p class="me-3"><i class="fa-regular fa-eye me-1"></i><?php echo $record['view'] ?></p>
+                    <span class="btn-like me-3">
+                        <i class="icon-like fa-solid fa-thumbs-up me-1"></i>
                         <span class="number-like"><?php echo $record['number_like'];?>
                         </span>
                     </span>

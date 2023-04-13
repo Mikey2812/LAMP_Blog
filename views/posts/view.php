@@ -49,7 +49,7 @@
                                 <?php foreach ($this->comments['data'] as $comment) { 
                                     $commentCSS =substr_count($comment['path'], '.')?>
                                 <div class="comment-items d-flex flex-row" <?php if ($commentCSS > 1) { ?>
-                                    style="padding-left:<?php echo ($commentCSS * 2);?>rem" <?php } ?>>
+                                    style="padding-left:<?php echo (($commentCSS - 1) * 3 + 1);?>rem" <?php } ?>>
                                     <img src="
                                     <?=UploadURI.'users/'.(($comment['users_avatar'])? $comment['users_avatar']: 'no_picture.png'); ?>"
                                         width="60" height="60" class="rounded-circle me-3">
@@ -64,11 +64,17 @@
                                         </div>
                                         <p class="text-justify comment-text mb-0"><?php echo $comment['content'];?></p>
                                         <div class="d-flex flex-row user-feed mt-2">
-                                            <span class="icon-like btn-like me-3"><i
-                                                    class="icon-like fa-regular fa-thumbs-up me-1"></i>Like</span>
-                                            <span class="icon-like number-like me-3">
-                                                <i class="icon-like fa-regular fa-thumbs-up me-1"></i>
-                                                <?php echo $comment['number_like'];?></span>
+                                            <!-- <span class="btn-like me-3"><i
+                                                    class="icon-like fa-solid fa-thumbs-up me-1"></i>Like</span>
+                                            <span class="likes-info me-3">
+                                                <i class="fa-regular fa-thumbs-up me-1"></i>
+                                                <span class="number-like"><?php echo $comment['number_like'];?></span>
+                                            </span> -->
+                                            <span class="btn-like me-3">
+                                                <i class="icon-like fa-solid fa-thumbs-up me-1"></i>
+                                                <span class="number-like"><?php echo $comment['number_like'];?>
+                                                </span>
+                                            </span>
                                             <button class="btn-reply border-0"
                                                 data-comment-path="<?php echo $comment['path']; ?>">
                                                 <i class="fa fa-comments-o me-1"></i>

@@ -10,9 +10,16 @@
 
     <!-- Bootstrap core CSS -->
     <link href="<?php echo LibsURI; ?>bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="<?php echo LibsURI; ?>/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="<?php echo LibsURI; ?>fontawesome/css/all.min.css">
+    <link href="<?php echo LibsURI; ?>Admin_LTE/plugins/toastr/toastr.min.css">
     <link href="<?php echo RootREL; ?>media/css/main.css" rel="stylesheet">
     <?php echo vendor_html_helper::_cssHeader(); ?>
+    <script>
+    let isLogin = false;
+    <?php if (isset($_SESSION['user'])) { ?>
+    isLogin = true;
+    <?php } ?>
+    </script>
 </head>
 
 <body class="pb-0">

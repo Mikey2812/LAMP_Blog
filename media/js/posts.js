@@ -4,9 +4,9 @@ let numberComment = $('.number-comment')
 let avatarSRC = "";
 let userName = "";
 
-function renderComment(content) {
-    let html = `<div class="d-flex flex-row p-3">
-                    <img src="${avatarSRC} " width="60" height="60" class="rounded-circle me-3">
+function renderComment(content, path) {
+    let html = `<div class="comment-items d-flex flex-row">
+                    <img src="${avatarSRC} " width="60" height="60" class="rounded-circle me-3" style="min-width:60px">
                     <div class="w-100">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="d-flex flex-row align-items-center">
@@ -20,14 +20,18 @@ function renderComment(content) {
                             <span class="icon-like number-like me-3">
                                 <i class="icon-like fa-regular fa-thumbs-up me-1"></i>
                                 0</span>
-                            <a class="reply me-3"><i class="fa fa-comments-o me-1" aria-hidden="true"></i>Reply</a>
+                            <button class="btn-reply border-0"
+                                data-comment-path="${path}">
+                                <i class="fa fa-comments-o me-1"></i>
+                                <span class="reply">Reply</span>
+                            </button>
                         </div>
                     </div >
                 </div > `
     listComment.prepend(html);
 }
 
-function renderReply(positon, replyCSS, content) {
+function renderReply(positon, replyCSS, content, path) {
     let html = `<div class="comment-items d-flex flex-row" style="padding-left:${replyCSS}">
                     <img src="${avatarSRC} " width="60" height="60" class="rounded-circle me-3" style="min-width:60px">
                     <div class="w-100">
@@ -44,7 +48,7 @@ function renderReply(positon, replyCSS, content) {
                                 <i class="icon-like fa-regular fa-thumbs-up me-1"></i>
                                 0</span>
                             <button class="btn-reply border-0"
-                                data-comment-path="<?php echo $comment['path']; ?>">
+                                data-comment-path="${path}>">
                                 <i class="fa fa-comments-o me-1"></i>
                                 <span class="reply">Reply</span>
                             </button>
@@ -69,19 +73,69 @@ function renderFormReply(positon, replyCSS, pathParent) {
     positon.after(html);
 }
 
+function like(element) {
+    if (isLogin == false) {
+        $('.required_login').toggleClass('d-none');
+    }
+    else {
+        numberLike = element.children('span');
+        quantity = parseInt(numberLike.text());
+        if (element.hasClass("active")) {
+            quantity = quantity - 1;
+            action = -1;
+        }
+        else {
+            quantity = quantity + 1;
+            action = 1;
+        }
+        numberLike.text(quantity);
+        element.toggleClass('active');
+        location_id = element.attr('alt');
+        $.ajax({
+            url: 'likes/add',
+            data: {
+                location_id: location_id,
+                action: action,
+                type: 0,
+            },
+            type: "POST",
+        })
+            .done(function (json) {
+                // let path = convertPath(post_id) + '.' + convertPath(json);
+                // numberComment.text(parseInt(numberComment.text()) + 1);
+                // renderComment(content, path);
+                // inputContent.val('');
+                toastr["success"]("Comment", "Add comment Success!!");
+            })
+            .fail(function (xhr, status, errorThrown) {
+                alert("Sorry, there was a problem!");
+                console.log("Error: " + errorThrown);
+                console.log("Status: " + status);
+                console.dir(xhr);
+            });
+    }
+
+}
+
+function convertPath(id, parent) {
+    var str = id.toString();
+    var zerosToAdd = 4 - str.length;
+    var paddedString = '0'.repeat(zerosToAdd) + str;
+    if (parent !== undefined) {
+        paddedString = parent + '.' + paddedString;
+    }
+    return paddedString;
+}
+
 $(document).ready(function () {
     avatarSRC = commentInfo.attr("src");
     userName = commentInfo.attr("alt");
-    $('.icon-like').click(function (e) {
-        let number_like = Number($(this).parent().text());
-        if ($(this).hasClass("active")) {
-            number_like = number_like - 1;
-        }
-        else {
-            number_like = number_like + 1;
-        }
-        $(this).parent().text(number_like);
-        $(this).toggleClass("active");
+    $('.list-comments').on('click', '.btn-like', function (event) {
+        like($(this));
+    });
+
+    $('.posts-information').on('click', '.btn-like', function (event) {
+        like($(this));
     });
 
     let inputUser = $('.input-user');
@@ -109,8 +163,9 @@ $(document).ready(function () {
             type: "POST",
         })
             .done(function (json) {
+                let path = convertPath(post_id) + '.' + convertPath(json);
                 numberComment.text(parseInt(numberComment.text()) + 1);
-                renderComment(content);
+                renderComment(content, path);
                 inputContent.val('');
                 toastr["success"]("Comment", "Add comment Success!!");
             })
@@ -145,10 +200,11 @@ $(document).ready(function () {
             type: "POST",
         })
             .done(function (json) {
+                console.log(json);
+                let path = path_Parent + '.' + convertPath(json);
                 numberComment.text(parseInt(numberComment.text()) + 1);
-                renderReply(positon, replyCSS, content);
+                renderReply(positon, replyCSS, content, path);
                 positon.remove();
-                inputContent.val('');
                 toastr["success"]("Comment", "Add comment Success!!");
             })
             .fail(function (xhr, status, errorThrown) {

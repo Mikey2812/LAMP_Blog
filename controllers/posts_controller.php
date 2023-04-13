@@ -3,23 +3,33 @@
 		protected $topics;
 		protected $errors;
 		protected $comments;
+		protected $likes;
 		public function index() {
 			$pm = post_model::getInstance();
 			$conditions = '';
-			$this->records = $pm->allp('*',['conditions'=>$conditions, 'joins'=>['user','comment']]);
+			$this->records = $pm->allp('*',['conditions'=>$conditions, 'joins'=>['user']]);
+			$um = user_model::getInstance();
+			$conditionsUser = 'id = '.$_SESSION['user']['id'];
+			$this->likes = $um->allp('*',['conditions'=> $conditionsUser, 
+										'joins'=>['like'],
+										'get-child'=>true,]);
+			//$this->records = $pm->getAllRecords();
+
+			// $this->display();
+			// $um = user_model::getInstance();
+			// $conditions = '';
+			// $this->records = $um->allp('*',
+			// 							['conditions'=> $conditions, 
+			// 							'joins'=>['post','like'],
+			// 							'search-left-join'=>true,
+			// 							'order' => 'id ASC']);
 			$this->display();
 		}
 
 		public function view($id) {
 			$pm = post_model::getInstance();
 			$this->record = $pm->getRecord($id);
-			
-			//$conditions = "id = '$id[1]'";
-			// $this->record = $pm->allp('*',
-			// 							['conditions'=> $conditions, 
-			// 							'joins'=>['user','comment'],
-			// 							'get-child'=>true]);
-
+		
 			$cm = comment_model::getInstance();
 			$conditions = "post_id = '$id[1]'";
 			$this->comments = $cm->allp('*',

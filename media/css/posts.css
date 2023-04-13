@@ -24,6 +24,25 @@
     padding: 1rem;
 }
 
+.btn-like {
+    cursor: pointer;
+}
+
+.btn-like:hover {
+    color: blue;
+}
+
+.btn-like {
+    transform: rotate(-360deg);
+    transition: transform 0.5s ease;
+}
+
+.btn-like.active {
+    color: blue;
+    transform: rotate(360deg);
+    transition: transform 0.5s ease;
+}
+
 .btn-reply {
     color: #000;
     background-color: #FFF;

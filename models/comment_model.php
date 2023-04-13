@@ -10,8 +10,8 @@
             ]
         ];
         
-        public function convertPath ($post_id, $auto_id) {
-			$path = sprintf("%04d", $post_id).'.'.sprintf("%04d", $auto_id);
+        public function convertPath ($id) {
+			$path = sprintf("%04d", $id);
 			return $path;
 		}
 
@@ -23,13 +23,15 @@
             return $auto_increment_id;
         }
 
-        public function updatePath () {
-            $sql = "SELECT id, post_id FROM comments ORDER BY id DESC LIMIT 1";
-            $result = mysqli_query($this->con,$sql);
-            $row = $result->fetch_assoc();
-            $id = $row['id'];
-            $path = $this->convertPath($row['post_id'], $id);
-            $query = "UPDATE comments SET path = '$path' WHERE id = '$id'";
+        public function updatePath ($post_id, $cmt_id, $parent = null) {
+            $path = "";
+            if ($parent != null) {
+                $path = $parent.'.'.$this->convertPath($cmt_id);
+            }
+            else {
+                $path = $this->convertPath($post_id).'.'.$this->convertPath($cmt_id);
+            }
+            $query = "UPDATE comments SET path = '$path' WHERE id = '$cmt_id'";
 			mysqli_query($this->con,$query);
         }
     }
