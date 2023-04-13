@@ -130,6 +130,8 @@ function convertPath(id, parent) {
 $(document).ready(function () {
     avatarSRC = commentInfo.attr("src");
     userName = commentInfo.attr("alt");
+
+    //Like
     $('.list-comments').on('click', '.btn-like', function (event) {
         like($(this));
     });
@@ -141,6 +143,15 @@ $(document).ready(function () {
     let inputUser = $('.input-user');
     let inputPost = $('.input-post');
     let inputContent = $('.input-content');
+
+    //Direct Comment
+    $('.btn-direct_comment').click(function (e) {
+        const myPromise = new Promise((resolve, reject) => {
+            window.location.href = "/PHP/LAMP_Blog/posts/view/" + $(this).attr('alt');
+        });
+        myPromise
+            .then($("#content").focus());
+    });
 
     //Add Comments
     $('a.btn-comments').click(function (e) {

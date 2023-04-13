@@ -8,11 +8,14 @@
 			$pm = post_model::getInstance();
 			$conditions = '';
 			$this->records = $pm->allp('*',['conditions'=>$conditions, 'joins'=>['user']]);
-			$um = user_model::getInstance();
+			if (isset($_SESSION['user']['email'])) {
+				$um = user_model::getInstance();
 			$conditionsUser = 'id = '.$_SESSION['user']['id'];
 			$this->likes = $um->allp('*',['conditions'=> $conditionsUser, 
 										'joins'=>['like'],
 										'get-child'=>true,]);
+			}
+		
 			//$this->records = $pm->getAllRecords();
 
 			// $this->display();

@@ -5,7 +5,9 @@
 <?php include_once 'views/layout/'.$this->layout.'header.php'; ?>
 <?php require 'controllers/config_controller.php'; ?>
 <div class="content">
-    <?php $arrayID = filterPostID($this->likes['data']); ?>
+    <?php if (isset($this->likes)) {
+        $arrayID = filterPostID($this->likes['data']);
+    } ?>
     <div class="d-flex justify-content-between">
         <h1 class="mt-5">List Blog</h1>
         <a href="<?php echo vendor_app_util::url(['ctl'=>'posts', 'act'=>'add']); ?>"
@@ -39,7 +41,8 @@
                         <span class="number-like"><?php echo $record['number_like'];?>
                         </span>
                     </span>
-                    <p class="me-2"><i class="fa-regular fa-comment me-1"></i><?php echo $record['number_comment'] ?>
+                    <p class="btn-direct_comment me-2" alt="<?php echo $record['id']?>">
+                        <i class="fa-regular fa-comment me-1"></i><?php echo $record['number_comment'] ?>
                     </p>
                 </div>
             </div>
