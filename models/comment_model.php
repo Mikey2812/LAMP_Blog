@@ -23,6 +23,11 @@
             return $auto_increment_id;
         }
 
+        public function updateLikes ($action, $id) {
+            $query = "UPDATE comments SET "."number_like = number_like + '$action'"." WHERE id='$id'";
+			mysqli_query($this->con,$query);
+        }
+
         public function updatePath ($post_id, $cmt_id, $parent = null) {
             $path = "";
             if ($parent != null) {

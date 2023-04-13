@@ -6,6 +6,10 @@
 <?php include_once 'views/layout/'.$this->layout.'header.php'; ?>
 <?php require 'controllers/config_controller.php'; ?>
 <div class="content mt-5">
+    <?php if (isset($this->likes)) {
+        $arrayID = filterCommentID($this->likes['data']);
+        var_dump($arrayID);
+    } ?>
     <div class="row">
         <h1><?php echo ($this->record['title']); ?></h1>
         <p><?php echo ($this->record['content']); ?></p>
@@ -70,8 +74,12 @@
                                                 <i class="fa-regular fa-thumbs-up me-1"></i>
                                                 <span class="number-like"><?php echo $comment['number_like'];?></span>
                                             </span> -->
-                                            <span class="btn-like me-3">
-                                                <i class="icon-like fa-solid fa-thumbs-up me-1"></i>
+                                            <span class="btn-like me-3
+                                                <?php if(isset($_SESSION['user']['id']) && in_array($comment['id'], $arrayID)){
+                                                    echo ' active';
+                                                } ?>" alt="<?php echo $comment['id']?>" data-type="1">
+                                                <i class="icon-like fa-solid fa-thumbs-up me-1">
+                                                </i>
                                                 <span class="number-like"><?php echo $comment['number_like'];?>
                                                 </span>
                                             </span>

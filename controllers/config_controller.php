@@ -30,4 +30,14 @@
         }
         return $result;
     }
+
+    function filterCommentID($values) {
+        $result = array();
+        foreach ($values as $value) {
+            if ($value['likes_type'] == 1) {
+                array_push($result, $value['likes_location_id']);
+            }
+        }
+        return $result;
+    }
 ?>

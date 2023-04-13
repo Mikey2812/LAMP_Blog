@@ -35,7 +35,7 @@
                     <span class="btn-like me-3<?php if(isset($_SESSION['user']['id']) 
                                     && in_array($record['id'], $arrayID)){
                                         echo ' active';
-                                    } ?>" alt="<?php echo $record['id']?>">
+                                    } ?>" alt="<?php echo $record['id']?>" data-type="0">
                         <i class="icon-like fa-solid fa-thumbs-up me-1">
                         </i>
                         <span class="number-like"><?php echo $record['number_like'];?>

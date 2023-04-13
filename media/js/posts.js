@@ -4,7 +4,7 @@ let numberComment = $('.number-comment')
 let avatarSRC = "";
 let userName = "";
 
-function renderComment(content, path) {
+function renderComment(json, content, path) {
     let html = `<div class="comment-items d-flex flex-row">
                     <img src="${avatarSRC} " width="60" height="60" class="rounded-circle me-3" style="min-width:60px">
                     <div class="w-100">
@@ -16,10 +16,11 @@ function renderComment(content, path) {
                         </div>
                         <p class="text-justify comment-text mb-0">${content}</p>
                         <div class="d-flex flex-row user-feed mt-2">
-                            <span class="icon-like btn-like me-3"><i class="icon-like fa-regular fa-thumbs-up me-1"></i>Like</span>
-                            <span class="icon-like number-like me-3">
-                                <i class="icon-like fa-regular fa-thumbs-up me-1"></i>
-                                0</span>
+                            <span class="btn-like me-3" alt="${json}" data-type="1">
+                                <i class="icon-like fa-solid fa-thumbs-up me-1">
+                                </i>
+                                <span class="number-like">0</span>
+                            </span>
                             <button class="btn-reply border-0"
                                 data-comment-path="${path}">
                                 <i class="fa fa-comments-o me-1"></i>
@@ -31,7 +32,7 @@ function renderComment(content, path) {
     listComment.prepend(html);
 }
 
-function renderReply(positon, replyCSS, content, path) {
+function renderReply(positon, replyCSS, json, content, path) {
     let html = `<div class="comment-items d-flex flex-row" style="padding-left:${replyCSS}">
                     <img src="${avatarSRC} " width="60" height="60" class="rounded-circle me-3" style="min-width:60px">
                     <div class="w-100">
@@ -43,10 +44,11 @@ function renderReply(positon, replyCSS, content, path) {
                         </div>
                         <p class="text-justify comment-text mb-0">${content}</p>
                         <div class="d-flex flex-row user-feed mt-2">
-                            <span class="icon-like btn-like me-3"><i class="icon-like fa-regular fa-thumbs-up me-1"></i>Like</span>
-                            <span class="icon-like number-like me-3">
-                                <i class="icon-like fa-regular fa-thumbs-up me-1"></i>
-                                0</span>
+                            <span class="btn-like me-3" alt="${json}" data-type="1">
+                                <i class="icon-like fa-solid fa-thumbs-up me-1">
+                                </i>
+                                <span class="number-like">0</span>
+                            </span>
                             <button class="btn-reply border-0"
                                 data-comment-path="${path}>">
                                 <i class="fa fa-comments-o me-1"></i>
@@ -91,12 +93,13 @@ function like(element) {
         numberLike.text(quantity);
         element.toggleClass('active');
         location_id = element.attr('alt');
+        type = element.attr('data-type');
         $.ajax({
-            url: 'likes/add',
+            url: '/PHP/LAMP_Blog/likes/add',
             data: {
                 location_id: location_id,
                 action: action,
-                type: 0,
+                type: type,
             },
             type: "POST",
         })
@@ -176,7 +179,7 @@ $(document).ready(function () {
             .done(function (json) {
                 let path = convertPath(post_id) + '.' + convertPath(json);
                 numberComment.text(parseInt(numberComment.text()) + 1);
-                renderComment(content, path);
+                renderComment(json, content, path);
                 inputContent.val('');
                 toastr["success"]("Comment", "Add comment Success!!");
             })
@@ -214,7 +217,7 @@ $(document).ready(function () {
                 console.log(json);
                 let path = path_Parent + '.' + convertPath(json);
                 numberComment.text(parseInt(numberComment.text()) + 1);
-                renderReply(positon, replyCSS, content, path);
+                renderReply(positon, replyCSS, json, content, path);
                 positon.remove();
                 toastr["success"]("Comment", "Add comment Success!!");
             })

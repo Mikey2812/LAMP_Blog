@@ -40,7 +40,11 @@
 										'joins'=>['user'],
 										'get-child'=>true,
 										'order' => 'path ASC']);
-
+			$um = user_model::getInstance();
+			$conditionsUser = 'id = '.$_SESSION['user']['id'];
+			$this->likes = $um->allp('*',['conditions'=> $conditionsUser, 
+										'joins'=>['like'],
+										'get-child'=>true,]);
 			$pm->addViews($id[1]);
 			$this->display();
 		}
