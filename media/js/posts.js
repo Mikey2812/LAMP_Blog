@@ -240,8 +240,51 @@ $(document).ready(function () {
     //Del post 
     $('.list-blog').on('click', 'a.del-record', function (event) {
         event.preventDefault();
-        $(this).parent().parent().parent().parent().remove();
-        toastr["success"]("Del Post Success!!", "Post!!");
+        tc = $(this);
+        url = tc.attr('href');
+        $.ajax({
+            url: url,
+            data: {
+                // id: id,
+            },
+            type: "POST",
+        })
+            .done(function (json) {
+                tc.parent().parent().parent().parent().remove();
+                toastr["success"]("Del Post Success!!", "Post!!");
+            })
+            .fail(function (xhr, status, errorThrown) {
+                alert("Sorry, there was a problem!");
+                console.log("Error: " + errorThrown);
+                console.log("Status: " + status);
+                console.dir(xhr);
+            });
+    });
+
+    //Del comment
+    $('.list-comments').on('click', '.btn-trash', function (event) {
+        event.preventDefault();
+        path_Comment = $(this).attr('data-comment-path');
+        tc = $(this);
+        url = tc.attr('href');
+        $.ajax({
+            url: url,
+            data: {
+                path_Comment: path_Comment,
+            },
+            type: "POST",
+        })
+            .done(function (json) {
+                var element = $('[data-comment-path^="' + path_Comment + '"]');
+                element.parent().parent().parent().remove();
+                toastr["success"]("Del Post Success!!", "Post!!");
+            })
+            .fail(function (xhr, status, errorThrown) {
+                alert("Sorry, there was a problem!");
+                console.log("Error: " + errorThrown);
+                console.log("Status: " + status);
+                console.dir(xhr);
+            });
     });
 
 });

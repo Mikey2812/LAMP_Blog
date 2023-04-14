@@ -116,5 +116,18 @@
 			}
 			$this->display();
 		}
+
+		public function del($id) {
+			if (!isset($_SESSION['user']['email'])) {
+				header( "Location: ".vendor_app_util::url(array('ctl'=>'login')));
+				exit;
+			}
+			$pm = post_model::getInstance();
+            if($pm->delCommentAndLike($id[1])) {
+				$pm->delPostAndLike($id[1]);
+				echo "Delete Successful";
+			} 
+            else echo "error";
+		}
 	}
 ?>

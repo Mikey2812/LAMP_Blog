@@ -67,12 +67,6 @@
                                         </div>
                                         <p class="text-justify comment-text mb-0"><?php echo $comment['content'];?></p>
                                         <div class="d-flex flex-row user-feed mt-2">
-                                            <!-- <span class="btn-like me-3"><i
-                                                    class="icon-like fa-solid fa-thumbs-up me-1"></i>Like</span>
-                                            <span class="likes-info me-3">
-                                                <i class="fa-regular fa-thumbs-up me-1"></i>
-                                                <span class="number-like"><?php echo $comment['number_like'];?></span>
-                                            </span> -->
                                             <span class="btn-like me-3
                                                 <?php if(isset($_SESSION['user']['id']) && in_array($comment['id'], $arrayID)){
                                                     echo ' active';
@@ -82,12 +76,19 @@
                                                 <span class="number-like"><?php echo $comment['number_like'];?>
                                                 </span>
                                             </span>
-                                            <button class="btn-reply border-0"
+                                            <button class="btn-reply border-0 ms-1"
                                                 data-comment-path="<?php echo $comment['path']; ?>">
                                                 <i class="fa fa-comments-o me-1"></i>
                                                 <span class="reply">Reply</span>
                                             </button>
-
+                                            <?php if($_SESSION['user']['id'] == $comment['user_id']) { ?>
+                                            <button class="btn-trash border-0 bg-light ms-1"
+                                                data-comment-path="<?php echo $comment['path']; ?>"
+                                                href="<?php echo (vendor_app_util::url(["ctl"=>"comments", "act"=>"del/".$comment['id']])) ?>">
+                                                <i class="fa-solid fa-trash"></i>
+                                                <span class="trash">Delele</span>
+                                            </button>
+                                            <?php } ?>
                                         </div>
                                     </div>
                                 </div>

@@ -55,5 +55,19 @@
 				}
 			}
 		}
+
+		public function del($id) {
+			if (!isset($_SESSION['user']['email'])) {
+				header( "Location: ".vendor_app_util::url(array('ctl'=>'login')));
+				exit;
+			}
+			if (isset($_POST['path_Comment'])) {
+				$cm = comment_model::getInstance();
+				$cm->delCommentAndLike($_POST['path_Comment']);
+			}
+			else {
+				echo 'error';
+			}
+		}
 	}
 ?>

@@ -2,8 +2,8 @@
     class post_model extends vendor_frap_model{
         protected $relationships = [
             'hasMany'	=>	[
-                ['comment',	'key'=>'post_id'],
-                // ['like',	'key'=>'post_id'],
+                ['comment',	'key'=>'post_id', 'on_del'=>true],
+                ['like', 'key'=>'post_id', 'on_del'=>true],
             ],
             'belongTo'	=>	[
                 ['user','key'=>'user_id'],
@@ -52,6 +52,15 @@
 	    	    }
 		    }
             return $pagination;
+        }
+
+        public function delPostAndLike($id) {
+            $query = "DELETE posts,likes FROM posts LEFT JOIN likes ON posts.id = likes.location_id WHERE posts.id = '$id' and likes.type = 0";
+            mysqli_query($this->con,$query);
+        }
+        public function delCommentAndLike($id) {
+            $query = "DELETE comments,likes FROM comments LEFT JOIN likes ON comments.id=likes.location_id WHERE post_id = '$id' and (likes.type IS NULL OR likes.type = 1)";
+            mysqli_query($this->con,$query);
         }
     }
 ?>

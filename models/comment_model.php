@@ -39,5 +39,12 @@
             $query = "UPDATE comments SET path = '$path' WHERE id = '$cmt_id'";
 			mysqli_query($this->con,$query);
         }
+
+        public function delCommentAndLike($path) {
+            $query = "DELETE comments, likes FROM comments LEFT JOIN likes ON comments.id = likes.location_id WHERE comments.path like '$path%' AND (likes.type IS NULL OR likes.type = 1)";
+            echo $query;
+            mysqli_query($this->con,$query);
+        }
+        
     }
 ?>

@@ -31,14 +31,10 @@
     <header>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand p-0" href="<?php echo vendor_app_util::url(['ctl'=>'home']); ?>">
-                    <img class="logo" src="<?php echo MediaURI; ?>img/logo.png" alt="Logo" style="max-height:50px">
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    <a class="navbar-brand p-0" href="<?php echo vendor_app_util::url(['ctl'=>'home']); ?>">
+                        <img class="logo" src="<?php echo MediaURI; ?>img/logo.png" alt="Logo" style="max-height:50px">
+                    </a>
                     <ul class="navbar-nav mb-2 mb-md-0">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page"
@@ -48,10 +44,6 @@
                             <a class="nav-link" href="<?php echo vendor_app_util::url(['ctl'=>'posts']); ?>">Posts</a>
                         </li>
                     </ul>
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
                     <div class="d-flex">
                         <?php  if (!isset($_SESSION['user']['email'])) { ?>
                         <p class="d-flex align-items-center me-2 mb-0" style="color:yellow">Hi!
@@ -70,7 +62,6 @@
                                 <?php echo user_model::getFullnameLogined();?></p>
                             <ul class="dropdown-menu pull-right dropdown-menu-end end-0 p-3 bg-dark text-warning"
                                 aria-labelledby="dropdownMenuButton" style="top:50px">
-                                <li><a class="dropdown-item text-warning" href="#">Action</a></li>
                                 <li><a class="dropdown-item text-warning"
                                         href="<?=vendor_app_util::url(array('ctl'=>'posts', 'act'=>'profile/'.$_SESSION['user']['id'])); ?>">My
                                         Blog</a></li>
