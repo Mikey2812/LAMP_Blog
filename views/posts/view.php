@@ -8,7 +8,6 @@
 <div class="content mt-5">
     <?php if (isset($this->likes)) {
         $arrayID = filterCommentID($this->likes['data']);
-        var_dump($arrayID);
     } ?>
     <div class="row">
         <h1><?php echo ($this->record['title']); ?></h1>
@@ -120,7 +119,7 @@
 </div>
 <?php
     global $mediaFiles;
-    array_push($mediaFiles['js'], RootREL.'media/js/posts.js');
     array_push($mediaFiles['js'], LibsURI.'Admin_LTE/plugins/toastr/toastr.min.js');
+    array_push($mediaFiles['js'], RootREL.'media/js/posts.js');
 ?>
 <?php include_once 'views/layout/'.$this->layout.'footer.php'; ?>

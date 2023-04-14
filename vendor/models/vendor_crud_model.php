@@ -1,5 +1,7 @@
 <?php
 class vendor_crud_model extends vendor_main_model {
+	protected $relationships;
+	protected $error;
 	use vendor_validator;
 
 	public function delRecord($id=null, $conditions=null) {
@@ -134,29 +136,29 @@ class vendor_crud_model extends vendor_main_model {
 
 	// Function delete records and relationship with all deep 
 	//public function delRecordsRelationshipAllDeep($ids=null, $conditions=null) {}
-	public function delRsRAD($id=null, $conditions=null) {
-		if($conditions)	$conditions = ' and '.$conditions;
-		$ids = vendor_html_helper::processSQLString($ids);
-		$sql = "DELETE FROM $this->table WHERE id in ($ids) $conditions";
-		if($this->con->query($sql)) {
-			if(isset($this->relationships) && isset($this->relationships['hasMany'])) {
-				$hasManyArr = (vendor_app_util::is_multi_array($this->relationships['hasMany']))?
-								$this->relationships['hasMany'] : [$this->relationships['hasMany']];
-				foreach($hasManyArr as $v) {
-					if($v['on_del']) {
-						$joinTable = $this->getTableNameFromModelName($v[0]);
-						$joinModel = new $v[0]();
-						$joinRecords = $joinModel->getRecords('id',['conditions'=>$joinTable.'.'.$this->table.'_id = in ('.$ids.')']);
-						while($record = mysqli_fetch_array($joinRecords)) {
-							$joinModel->delRRAD($record['id']);
-						}
-					}
-				}
-			}
-			return true;
-		} else
-			return false;
-	}
+	// public function delRsRAD($id=null, $conditions=null) {
+	// 	if($conditions)	$conditions = ' and '.$conditions;
+	// 	$ids = vendor_html_helper::processSQLString($ids);
+	// 	$sql = "DELETE FROM $this->table WHERE id in ($ids) $conditions";
+	// 	if($this->con->query($sql)) {
+	// 		if(isset($this->relationships) && isset($this->relationships['hasMany'])) {
+	// 			$hasManyArr = (vendor_app_util::is_multi_array($this->relationships['hasMany']))?
+	// 							$this->relationships['hasMany'] : [$this->relationships['hasMany']];
+	// 			foreach($hasManyArr as $v) {
+	// 				if($v['on_del']) {
+	// 					$joinTable = $this->getTableNameFromModelName($v[0]);
+	// 					$joinModel = new $v[0]();
+	// 					$joinRecords = $joinModel->getRecords('id',['conditions'=>$joinTable.'.'.$this->table.'_id = in ('.$ids.')']);
+	// 					while($record = mysqli_fetch_array($joinRecords)) {
+	// 						$joinModel->delRRAD($record['id']);
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 		return true;
+	// 	} else
+	// 		return false;
+	// }
 	
 	public function addRecord($datas) {
 		global $app;
@@ -216,7 +218,6 @@ class vendor_crud_model extends vendor_main_model {
 		}
 		if($conditions)	$conditions = ' and '.$conditions;
 		$query = "UPDATE $this->table SET $setDatas WHERE id='$id'".$conditions;
-		echo($query);
 		if(mysqli_query($this->con,$query))
 			return true;
 		else {
@@ -252,23 +253,23 @@ class vendor_crud_model extends vendor_main_model {
 		}
 	}
 
-	public function editRecordsWhere($conditions="", $data){
-		$i=0;
-		foreach($data as $k=>$v) {
-			if($i) {
-				$setDatas .=',';
-			}
-			$setDatas .= $k."='".$v."'";
-			$i++;
-		}
-		$query = "UPDATE $this->table SET $setDatas ".($conditions!=""?"WHERE ".$conditions:'');
-		if(mysqli_query($this->con,$query))
-			return true;
-		else {
-			$this->error = mysqli_error($this->con);
-			return false;
-		}
-	}
+	// public function editRecordsWhere($conditions="", $data){
+	// 	$i=0;
+	// 	foreach($data as $k=>$v) {
+	// 		if($i) {
+	// 			$setDatas .=',';
+	// 		}
+	// 		$setDatas .= $k."='".$v."'";
+	// 		$i++;
+	// 	}
+	// 	$query = "UPDATE $this->table SET $setDatas ".($conditions!=""?"WHERE ".$conditions:'');
+	// 	if(mysqli_query($this->con,$query))
+	// 		return true;
+	// 	else {
+	// 		$this->error = mysqli_error($this->con);
+	// 		return false;
+	// 	}
+	// }
 
 	public function deleteRecordsWhere($conditions=""){
 		$query = "DELETE FROM ".$this->table.($conditions!=""?" WHERE ".$conditions:'');

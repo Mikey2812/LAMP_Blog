@@ -4,7 +4,7 @@
 ?>
 <?php include_once 'views/layout/'.$this->layout.'header.php'; ?>
 <div class="content">
-    <h1>Most Viewer</h1><br />
+    <h1 class="mt-5">Most Viewer</h1><br />
     <div class="row">
         <?php if(count($this->records['data'])) { ?>
         <?php foreach ($this->records['data'] as $record) { ?>
@@ -36,6 +36,9 @@
         <?php } ?>
     </div>
 </div>
+
+
+
 <?php
     global $mediaFiles;
     array_push($mediaFiles['js'], RootREL.'media/js/posts.js');

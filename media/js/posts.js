@@ -77,7 +77,8 @@ function renderFormReply(positon, replyCSS, pathParent) {
 
 function like(element) {
     if (isLogin == false) {
-        $('.required_login').toggleClass('d-none');
+        toastr["warning"]("You must login to like<br /><br /><a type='button' href='login' class='btn btn-dark login'>Login Now</a>");
+        return;
     }
     else {
         numberLike = element.children('span');
@@ -90,8 +91,6 @@ function like(element) {
             quantity = quantity + 1;
             action = 1;
         }
-        numberLike.text(quantity);
-        element.toggleClass('active');
         location_id = element.attr('alt');
         type = element.attr('data-type');
         $.ajax({
@@ -104,11 +103,8 @@ function like(element) {
             type: "POST",
         })
             .done(function (json) {
-                // let path = convertPath(post_id) + '.' + convertPath(json);
-                // numberComment.text(parseInt(numberComment.text()) + 1);
-                // renderComment(content, path);
-                // inputContent.val('');
-                toastr["success"]("Comment", "Add comment Success!!");
+                numberLike.text(quantity);
+                element.toggleClass('active');
             })
             .fail(function (xhr, status, errorThrown) {
                 alert("Sorry, there was a problem!");
@@ -136,10 +132,13 @@ $(document).ready(function () {
 
     //Like
     $('.list-comments').on('click', '.btn-like', function (event) {
+        event.preventDefault();
         like($(this));
+
     });
 
     $('.posts-information').on('click', '.btn-like', function (event) {
+        event.preventDefault();
         like($(this));
     });
 
@@ -232,11 +231,34 @@ $(document).ready(function () {
     //Show form reply
     $('.list-comments').on('click', 'button.btn-reply', function (event) {
         event.preventDefault();
-        // $('button.btn-reply').click(function (e) {
-        // e.preventDefault();
         let pathParent = $(this).attr("data-comment-path");
         let positon = $(this).parent().parent().parent();
         let replyCSS = parseInt(positon.css('padding-left').slice(0, -2)) + 48;
         renderFormReply(positon, replyCSS, pathParent);
     });
+
+    //Del post 
+    $('.list-blog').on('click', 'a.del-record', function (event) {
+        event.preventDefault();
+        $(this).parent().parent().parent().parent().remove();
+        toastr["success"]("Del Post Success!!", "Post!!");
+    });
+
 });
+toastr.options = {
+    "closeButton": false,
+    "debug": false,
+    "newestOnTop": true,
+    "progressBar": false,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+}

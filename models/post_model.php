@@ -25,11 +25,6 @@
 			mysqli_query($this->con,$query);
         }
 
-        public function getTopics () {
-            $query = "SELECT * FROM topics ORDER BY ID DESC";
-            return mysqli_query($this->con,$query);
-        }
-
         public function getAllRecords () {
                 $query = "SELECT posts.*, users.firstname as users_firstname, users.lastname as users_lastname, 
                             likes.id as likes_id, likes.location_id as likes_location_id, likes.user_id as likes_user_id, likes.type as likes_type 

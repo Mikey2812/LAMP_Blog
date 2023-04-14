@@ -122,14 +122,32 @@
         </div>
     </div>
 </footer>
+<!-- Modal -->
+<!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Notification</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                You must Login to use
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a type="button" href="<?php echo vendor_app_util::url(['ctl'=>'login']); ?>"
+                    class="btn btn-primary">Login Now ?</a>
+            </div>
+        </div>
+    </div>
+</div> -->
 </main>
 <script src="<?php echo LibsURI; ?>ckeditor/ckeditor.js"></script>
 <script src="<?php echo LibsURI; ?>Admin_LTE/plugins/jquery/jquery.min.js"></script>
 <script src="<?php echo LibsURI; ?>bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="<?php echo LibsURI; ?>Admin_LTE/plugins/toastr/toastr.min.js"></script>
 <script src="https://kit.fontawesome.com/d8d2839d44.js" crossorigin="anonymous"></script>
 <?php echo vendor_html_helper::_jsFooter(); ?>
-
+<script src="<?php echo MediaURI; ?>js/main.js"></script>
 </body>
 
 </html>

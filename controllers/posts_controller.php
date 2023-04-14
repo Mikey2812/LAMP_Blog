@@ -9,7 +9,7 @@
 			$conditions = '';
 			$this->records = $pm->allp('*',['conditions'=>$conditions, 'joins'=>['user']]);
 			if (isset($_SESSION['user']['email'])) {
-				$um = user_model::getInstance();
+			$um = user_model::getInstance();
 			$conditionsUser = 'id = '.$_SESSION['user']['id'];
 			$this->likes = $um->allp('*',['conditions'=> $conditionsUser, 
 										'joins'=>['like'],
@@ -50,9 +50,20 @@
 		}
 
 		public function profile($id) {
-			$pm = post_model::getInstance();
-			$conditions = "user_id = '$id[1]'";
-			$this->records = $pm->allp('*',['conditions'=>$conditions, 'joins'=>['user','comment']]);
+			if (isset($_SESSION['user']['email'])) {
+				$pm = post_model::getInstance();
+				$conditions = "user_id = '$id[1]'";
+				$this->records = $pm->allp('*',['conditions'=>$conditions, 'joins'=>['user']]);	
+				$um = user_model::getInstance();
+				$conditionsUser = 'id = '.$_SESSION['user']['id'];
+				$this->likes = $um->allp('*',['conditions'=> $conditionsUser, 
+											'joins'=>['like'],
+											'get-child'=>true,]);
+			}
+			else {
+				header( "Location: ".vendor_app_util::url(array('ctl'=>'login')));
+				exit;
+			}
 			$this->display();
 		}
 		
@@ -62,7 +73,8 @@
 				exit;
 			}
 			$pm = post_model::getInstance();
-			$this->topics = $pm->getTopics();
+			$tm = topic_model::getInstance();
+			$this->topics = $tm->getTopics();
 			if(isset($_POST['btn_submit'])) {
 				$postData = $_POST['post'];
 				if($_FILES['image']['tmp_name'])
@@ -73,6 +85,34 @@
                         $this->errors = ['database'=>'An error occurred when inserting data!'];
                         $this->record = $_POST;
                 	}
+			}
+			$this->display();
+		}
+
+		public function edit($id) {
+			if (!isset($_SESSION['user']['email'])) {
+				header( "Location: ".vendor_app_util::url(array('ctl'=>'login')));
+				exit;
+			}
+			$pm = post_model::getInstance();
+            $this->record = $pm->one($id[1]);
+			$tm = topic_model::getInstance();
+			$this->topics = $tm->getTopics();
+			if(isset($_POST['btn_submit'])) {
+				$postData = $_POST['post'];
+				if($_FILES['image']['tmp_name']) {
+					if($this->record['image'] && file_exists(RootURI."media/upload/" .$this->controller.'/'.$this->record['image'])) {
+						unlink(RootURI."media/upload/" .$this->controller.'/'.$this->record['image']);
+					}
+					$postData['image'] = $this->uploadImg($_FILES);
+				}
+				if($pm->editRecord($id, $postData)) {
+					header("Location: ".vendor_app_util::url(["ctl"=>"posts"]));
+					exit;
+				} else {
+					$this->errors = ['database'=>'An error occurred when editing data!'];
+					$this->record = $postData;
+				}
 			}
 			$this->display();
 		}

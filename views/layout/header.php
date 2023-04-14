@@ -11,7 +11,6 @@
     <!-- Bootstrap core CSS -->
     <link href="<?php echo LibsURI; ?>bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo LibsURI; ?>fontawesome/css/all.min.css">
-    <link href="<?php echo LibsURI; ?>Admin_LTE/plugins/toastr/toastr.min.css">
     <link href="<?php echo RootREL; ?>media/css/main.css" rel="stylesheet">
     <?php echo vendor_html_helper::_cssHeader(); ?>
     <script>
@@ -23,6 +22,12 @@
 </head>
 
 <body class="pb-0">
+    <!-- Preloader -->
+    <div class="preloader-wrapper d-none">
+        <div class="preloader">
+            <img src="<?php echo MediaURI; ?>img/1476.gif" alt="LAMP">
+        </div>
+    </div>
     <header>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <div class="container-fluid">
