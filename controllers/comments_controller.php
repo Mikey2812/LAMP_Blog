@@ -56,6 +56,21 @@
 			}
 		}
 
+		public function edit() {
+			if (!isset($_SESSION['user']['email'])) {
+				header( "Location: ".vendor_app_util::url(array('ctl'=>'login')));
+				exit;
+			}
+			if (isset($_POST['content'], $_POST['path'])) {
+				$cm = comment_model::getInstance();
+				$commentData["content"] = $_POST['content'];
+				$cm->editRecordsWhere($commentData, "path = '".$_POST['path']."'");
+			}
+			else {
+				echo 'error';
+			}
+		}
+
 		public function del($id) {
 			if (!isset($_SESSION['user']['email'])) {
 				header( "Location: ".vendor_app_util::url(array('ctl'=>'login')));

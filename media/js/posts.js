@@ -26,6 +26,16 @@ function renderComment(json, content, path) {
                                 <i class="fa fa-comments-o me-1"></i>
                                 <span class="reply">Reply</span>
                             </button>
+                            <button class="btn-comment-edit border-0 bg-light ms-1" data-comment-path="${path}"
+                                href="/PHP/LAMP_Blog/comments/edit/${json}">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                                <span class="trash">Edit</span>
+                            </button>
+                            <button class="btn-trash border-0 bg-light ms-1" data-comment-path="${path}"
+                                href="/PHP/LAMP_Blog/comments/del/${json}">
+                                <i class="fa-solid fa-trash"></i>
+                                <span class="trash">Delele</span>
+                            </button>
                         </div>
                     </div >
                 </div > `
@@ -54,23 +64,33 @@ function renderReply(positon, replyCSS, json, content, path) {
                                 <i class="fa fa-comments-o me-1"></i>
                                 <span class="reply">Reply</span>
                             </button>
+                            <button class="btn-comment-edit border-0 bg-light ms-1" data-comment-path="${path}"
+                                href="/PHP/LAMP_Blog/comments/edit/${json}">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                                <span class="trash">Edit</span>
+                            </button>
+                            <button class="btn-trash border-0 bg-light ms-1" data-comment-path="${path}"
+                                href="/PHP/LAMP_Blog/comments/del/${json}">
+                                <i class="fa-solid fa-trash"></i>
+                                <span class="trash">Delele</span>
+                            </button>
                         </div>
                     </div >
                 </div > `
     positon.after(html);
 }
 
-function renderFormReply(positon, replyCSS, pathParent) {
+function renderFormReply(positon, replyCSS, pathParent, value, type) {
     let html = `<div class="form-comment-items d-flex flex-row" style="padding-left:${replyCSS}px">
                     <img src="${avatarSRC} " width="60" height="60" class="rounded-circle me-3 reply-avatar"
                         style="min-width:60px">
                     <div class="w-100 d-flex align-items-center">
                         <input type="text" id="content" class="input-content_reply form-control w-100 p-3"
-                            placeholder="Enter your reply..." name="reply[content]">
-                        <a class="btn-comments_reply btn btn-outline-primary ms-3"
-                            name="add_comments_reply"
-                            href="/PHP/LAMP_Blog/comments/addreply" data-comment-path="${pathParent}">Add</a>
-                    </div>
+                            placeholder="Enter your reply..." name="reply[content]" value = "${value}">
+                        <a class="btn-comments_reply_${type} btn btn-outline-primary ms-3"
+                            name="${type}_comments"
+                            href="/PHP/LAMP_Blog/comments/${type}" data-comment-path="${pathParent}">Add</a>
+                    </div >
                 </div > `
     positon.after(html);
 }
@@ -191,7 +211,7 @@ $(document).ready(function () {
     });
 
     //Add Reply
-    $('.list-comments').on('click', '.btn-comments_reply', function (event) {
+    $('.list-comments').on('click', '.btn-comments_reply_addreply', function (event) {
         event.preventDefault();
         content = $('.input-content_reply').val();
         if (content === '') {
@@ -234,7 +254,7 @@ $(document).ready(function () {
         let pathParent = $(this).attr("data-comment-path");
         let positon = $(this).parent().parent().parent();
         let replyCSS = parseInt(positon.css('padding-left').slice(0, -2)) + 48;
-        renderFormReply(positon, replyCSS, pathParent);
+        renderFormReply(positon, replyCSS, pathParent, '', 'addreply');
     });
 
     //Del post 
@@ -252,6 +272,53 @@ $(document).ready(function () {
             .done(function (json) {
                 tc.parent().parent().parent().parent().remove();
                 toastr["success"]("Del Post Success!!", "Post!!");
+            })
+            .fail(function (xhr, status, errorThrown) {
+                alert("Sorry, there was a problem!");
+                console.log("Error: " + errorThrown);
+                console.log("Status: " + status);
+                console.dir(xhr);
+            });
+    });
+
+    //Show form edit
+    $('.list-comments').on('click', '.btn-comment-edit', function (event) {
+        event.preventDefault();
+        tc = $(this);
+        url = tc.attr('href');
+        let positon = tc.parent().parent().parent();
+        positon.addClass('d-none');
+        let replyCSS = parseInt(positon.css('padding-left'));
+        let value = tc.parent().prev().text().replace(/^\s+/, '');
+        let pathParent = tc.attr("data-comment-path");
+        renderFormReply(positon, replyCSS, pathParent, value, 'edit');
+    });
+
+    //Edit Comments
+    $('.list-comments').on('click', '.btn-comments_reply_edit', function (event) {
+        event.preventDefault();
+        content = $('.input-content_reply').val();
+        if (content === '') {
+            return;
+        }
+        tc = $(this);
+        url = tc.attr('href');
+        path = tc.attr('data-comment-path');
+        let positon = $(this).parent().parent();
+        let replyCSS = positon.css('padding-left');
+        $.ajax({
+            url: url,
+            data: {
+                content: content,
+                path: path,
+            },
+            type: "POST",
+        })
+            .done(function (json) {
+                positon.prev().children().children().eq(1).text(content);
+                positon.prev().removeClass('d-none');
+                positon.remove();
+                toastr["success"]("Comment", "Edit comment Success!!");
             })
             .fail(function (xhr, status, errorThrown) {
                 alert("Sorry, there was a problem!");
