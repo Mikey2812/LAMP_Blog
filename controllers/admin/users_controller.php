@@ -111,5 +111,19 @@
             }
             exit;
         }
+
+        public function filter() { 
+            $um = user_model::getInstance();
+            $conditions = '';
+            global $app;
+            if(isset($app['prs']['kw'])) {
+                $conditions .= (($conditions)? " AND (":"")."id LIKE '%".$app['prs']['kw']."%'
+                OR CONCAT(users.firstname, ' ', users.lastname) LIKE '%".$app['prs']['kw']."%'
+                OR email LIKE '%".$app['prs']['kw']."%'
+                OR phone LIKE '%".$app['prs']['kw']."%'".(($conditions)? ")":"");
+            }
+            $this->records = $um->allp('*',['conditions'=>$conditions, 'joins'=>false]);
+            $this->display();
+        }
     }
 ?>

@@ -27,5 +27,23 @@ class posts_controller extends vendor_backend_controller
                 $this->record = $pm->getRecord($id);
                 $this->display();
             }
+
+        public function filter() { 
+            $pm = post_model::getInstance();
+            $conditions = '';
+            global $app;
+            if(isset($app['prs']['kw'])) {
+                $conditions .= (($conditions)? " AND (":"")."title LIKE '%".$app['prs']['kw']."%'
+                OR topics.name LIKE '%".$app['prs']['kw']."%'
+                OR CONCAT(users.firstname, ' ', users.lastname) LIKE '%".$app['prs']['kw']."%'
+                OR id LIKE '%".$app['prs']['kw']."%'".(($conditions)? ")":"");
+            }
+
+            //$conditions .= "LIKE '".$data['kw']."'";
+            $this->records = $pm->allp('*', ['conditions'=>$conditions,
+                                            'joins'=>['topic','user'],
+                                            'pagination'=>['page' => 1,'nopp' => 10]]);
+            $this->display();
+        }
     }
 ?>

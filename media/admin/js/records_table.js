@@ -25,5 +25,6 @@ $(function () {
 			idAct = $(this).attr('alt');
 			delRecord(idAct, 'del');
 		}
-	});
+	})
+
 });

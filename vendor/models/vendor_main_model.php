@@ -92,6 +92,10 @@ class vendor_main_model {
 		} else {
 			$sql = "SELECT COUNT(*) as total FROM ".$this->table.$join.$conditions;
 		}
+		//Tu Che
+		$datas['posts.topics.name'] = 'topics.name';
+		$datas['posts.users.firstname'] = 'users.firstname';
+		$sql = $this->replaceData ($sql, $datas);
 		$result = $this->con->query($sql);
 		return $result->fetch_assoc()['total'];
 	}
@@ -102,6 +106,7 @@ class vendor_main_model {
 		$conditions = (isset($options['conditions']) && $options['conditions'])? $options['conditions']: '';
 		if(isset($this->relationships) && (isset($options['joins']) && $options['joins'])) {	
 			$joinR = $this->addJoins($options);
+
 			$join =	$joinR['join'];
 			$fields .= $joinR['joinFields'];;
 
@@ -136,7 +141,19 @@ class vendor_main_model {
 		}
 		
 		$sql = "SELECT ".$fields." FROM ".$this->table.$join.$conditions.$group.$order.$limit;
+		// Tu che
+		$datas['posts.topics.name'] = 'topics.name';
+		$datas['posts.users.firstname'] = 'users.firstname';
+		
+		$sql = $this->replaceData ($sql, $datas);
 		return $this->con->query($sql);
+	}
+
+	public function replaceData($value, $datas){
+		foreach($datas as $k=>$rv) {
+			$value = str_replace($k, $rv, $value);
+		}
+		return $value;
 	}
 
 	public function getRecordsWhere($wheres, $fields='*') {

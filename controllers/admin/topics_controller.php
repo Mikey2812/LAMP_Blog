@@ -79,5 +79,17 @@ class topics_controller extends vendor_backend_controller
         //     if($tm->delRelativeRecord($id, "role != 1")) echo "Delete Successful";
         //     else echo "error";
         // }
+
+        public function filter() { 
+            $tm = topic_model::getInstance();
+            $conditions = '';
+            global $app;
+            if(isset($app['prs']['kw'])) {
+                $conditions .= (($conditions)? " AND (":"")."id LIKE '%".$app['prs']['kw']."%'
+                OR name LIKE '%".$app['prs']['kw']."%'".(($conditions)? ")":"");
+            }
+            $this->records = $tm->allp('*',['conditions'=>$conditions, 'joins'=>false]);
+            $this->display();
+        }
     }
 ?>

@@ -38,7 +38,9 @@ var getDisable = <?php echo (isset($app['prs']['status']) && ($app['prs']['statu
                         </h3>
                     </div>
                     <div class="col-sm-6 col-xs-4 dataTables_wrapper">
-                        <form method="get" class="form-horizontal float-right">
+                        <form method="get"
+                            action="<?php echo (vendor_app_util::url(["ctl"=>"users", "act"=>"filter"])) ?>"
+                            class="form-horizontal float-right">
                             <div class="dataTables_filter">
                                 <label class="mb-0">Search:<input type="search" class="form-control form-control-sm"
                                         placeholder="" name="kw"
