@@ -28,5 +28,35 @@
             session_destroy(); 
             header( "Location: ".vendor_app_util::url(array('ctl'=>'login')));
         }
+
+        public function register() {
+            if(isset($_POST['btn_submit'])) {
+                $user = $_POST['user'];
+                //Change js later
+                if ($user['password'] != $user['repassword']) {
+                    $this->errors = ['message'=>'Password and Repassword not correct'];
+                }
+                if($user){
+                    $email = $user['email'];
+                    $um = new user_model();
+                    $result = $um->getRecordWhere([
+                        'email' => $email,
+                    ]);
+                    if(is_null($result)) {
+                        unset($user['repassword']);
+                        $user['password'] = vendor_app_util::generatePassword($user['password']);
+                        $user['role'] = 2;
+                        $user['status'] = 1;
+                        $um->addRecord($user);
+                        header("Location: ".vendor_app_util::url(["ctl"=>"login"]));
+                    }
+                    else {
+                        $this->errors = ['message'=>'Email already have !!'];
+                    }
+                }
+            }
+            $this->display();
+        }
+
     }
 ?>

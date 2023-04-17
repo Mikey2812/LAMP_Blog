@@ -53,6 +53,11 @@
                             <button type="submit" name="btn_submit" class="btn btn-primary btn-block pull-right">Sign
                                 In</button>
                         </div>
+                        <div class="col-12 d-flex justify-content-center mt-2">
+                            <span>No account? </span>
+                            <a href="<?php echo vendor_app_util::url(array('ctl'=>'login','act'=>'register')); ?>">
+                                Register Now!!</a>
+                        </div>
                         <!-- /.col -->
                     </div>
                 </form>
