@@ -10,11 +10,20 @@
         $arrayID = filterPostID($this->likes['data']);
     } ?>
     <div class="d-flex justify-content-between">
-        <h1 class="mt-5"><?php if ($app['act'] != 'profile') {
-                                        echo 'List Blog';
-                                    } else {
-                                        echo 'My Blog';
-                                    }?></h1>
+        <h1 class="mt-5">
+            <?php   
+                if ($app['ctl'] == 'home'){
+                    echo 'Most Viewer';
+                }
+                else {
+                    if ($app['act'] != 'profile') {
+                            echo 'List Blog';
+                    } else {
+                            echo 'My Blog';
+                    }
+                }
+            ?>
+        </h1>
         <a href="<?php echo vendor_app_util::url(['ctl'=>'posts', 'act'=>'add']); ?>"
             class="d-flex align-items-center btn btn-outline-info ms-2 mt-5">Add new post</a>
     </div>
@@ -25,7 +34,7 @@
             <div class="post-item overflow-hidden">
                 <a class="text-decoration-none"
                     href="<?php echo (vendor_app_util::url(["ctl"=>"posts", "act"=>"view/".$record['id']])) ?>">
-                    <img class="blog-img w-100 rounded-4" style="height:300px"
+                    <img class="blog-img w-100" style="height:300px"
                         src="<?=UploadURI.'posts/'.(($record['image'])? $record['image']: 'no_picture.png'); ?>">
                     <h3 class="blog-title text-center mt-3 p-3"><?php echo $record['title']?></h3>
                 </a>

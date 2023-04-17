@@ -2,7 +2,7 @@
 class vendor_main_model {
 	protected $con;
 	protected $table;
-	public $nopp = 20;
+	public $nopp = 10;
 	public $curp = 1;
 	public $errors = false;
   private static $instance = [];  

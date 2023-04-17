@@ -15,17 +15,6 @@
 										'joins'=>['like'],
 										'get-child'=>true,]);
 			}
-		
-			//$this->records = $pm->getAllRecords();
-
-			// $this->display();
-			// $um = user_model::getInstance();
-			// $conditions = '';
-			// $this->records = $um->allp('*',
-			// 							['conditions'=> $conditions, 
-			// 							'joins'=>['post','like'],
-			// 							'search-left-join'=>true,
-			// 							'order' => 'id ASC']);
 			$this->display();
 		}
 

@@ -220,8 +220,6 @@ class vendor_crud_model extends vendor_main_model {
 		}
 		if($conditions)	$conditions = ' and '.$conditions;
 		$query = "UPDATE $this->table SET $setDatas WHERE id='$id'".$conditions;
-		echo $query;
-		exit();
 		if(mysqli_query($this->con,$query))
 			return true;
 		else {

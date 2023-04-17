@@ -49,6 +49,10 @@ body {
 	transition: 0.2s ease-in-out;
 }
 
+.blog-img {
+	border-radius: 2rem;
+}
+
 .footer-section {
 	background: #151414;
 	position: relative;

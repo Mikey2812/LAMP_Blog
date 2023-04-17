@@ -136,13 +136,13 @@ var getDisable = <?php echo (isset($app['prs']['status']) && ($app['prs']['statu
                                             style="width: 10px;">
                                             <input type="checkbox" name="">
                                         </th>
-                                        <th>ID</th>
-                                        <th>Full name</th>
-                                        <th class="tabletShow">Email - Phone</th>
-                                        <th class="webShow">Avatar</th>
-                                        <th class="tabletShow">Role</th>
-                                        <th class="tabletShow">Status</th>
-                                        <th rowspan="1" colspan="1">Action</th>
+                                        <th style="width: 3%;">ID</th>
+                                        <th style="width: 15%;">Author</th>
+                                        <th style="width: 10%;">Topic Name</th>
+                                        <th class="tabletShow" style="width: 25%;">Title</th>
+                                        <th class="tabletShow" style="width: 10%;">Number of like</th>
+                                        <th class="tabletShow" style="width: 15%;">Image</th>
+                                        <th style="width: 20%;">Updated At</th>
                                     </tr>
                                 </tfoot>
                             </table>

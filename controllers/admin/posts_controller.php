@@ -1,7 +1,7 @@
 <?php
 class posts_controller extends vendor_backend_controller
     {
-        public function index()
+        public function index($page='1')
         {
             global $app;
             $conditions = "";
@@ -16,7 +16,9 @@ class posts_controller extends vendor_backend_controller
             // }
 
             $pm = post_model::getInstance();
-            $this->records = $pm->allp('*', ['conditions'=>$conditions, 'joins'=>['topic','user']]);
+            $this->records = $pm->allp('*', ['conditions'=>$conditions,
+                                             'joins'=>['topic','user'],
+                                            'pagination'=>['page' => $page['p'],'nopp' => 10]]);
             $this->display();
         }
 

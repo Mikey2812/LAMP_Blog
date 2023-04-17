@@ -8,7 +8,10 @@ class vendor_html_helper{
 
 	public static function pagination($norecords, $nocurp, $curp, $nopp) {
 		$from 	= ($curp-1)*$nopp+1;
-		$to 	= ($curp-1)*$nopp + $nocurp;
+		$to 	= $curp*$nopp;// + $nocurp;
+        if($to > $norecords) {
+            $to = $norecords;
+        }
 		$nopages= ceil($norecords/$nopp);
 		$relpath = self::helpersDirectory.__FUNCTION__."/index.php";
 		if(is_file("views".$relpath)) include "views".$relpath;

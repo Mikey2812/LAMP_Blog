@@ -7,11 +7,11 @@
 			 'pagination' => ['nopp' => '3']]);
 			$this->display();
 		}
-		public function view($id) {
-			$pm = post_model::getInstance();
-			$this->record = $pm->getRecord($id);
-			$pm->addViews($id[1]);
-			$this->display();
-		} 
+		// public function view($id) {
+		// 	$pm = post_model::getInstance();
+		// 	$this->record = $pm->getRecord($id);
+		// 	$pm->addViews($id[1]);
+		// 	$this->display();
+		// } 
 	}
 ?>
