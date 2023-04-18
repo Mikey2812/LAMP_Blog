@@ -23,8 +23,10 @@ class posts_controller extends vendor_backend_controller
         }
 
         public function view($id) {
-            $pm = post_model::getInstance();
+                $pm = post_model::getInstance();
                 $this->record = $pm->getRecord($id);
+                $cm = comment_model::getInstance();
+                $this->comments = $cm->getRecords('*',['conditions'=>'post_id ='.$id]);
                 $this->display();
             }
 

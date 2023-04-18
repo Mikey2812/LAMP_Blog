@@ -114,6 +114,27 @@
                 </div>
             </div>
 
+            <?php if (isset($this->comments)) { ?>
+            <div class="form-group row">
+                <!-- Comment -->
+                <label class="control-label col-md-3" for="comment">Comment</label>
+                <div class="controls col-md-7">
+                    <select name="user[status]" id="input-status" class="cmt_of_post form-control"
+                        onchange="window.location.href=this.value;">
+                        <option value=''>Choose Comment</option>
+                        <?php while($row = mysqli_fetch_array($this->comments)) : ?>
+                        <option value='/PHP/LAMP_Blog/admin/comments/view/<?php echo $row['id'];?>'>
+                            <?php echo $row['content'] ?>
+                        </option>
+                        <?php endwhile; ?>
+                    </select>
+                    <?php if( isset($this->errors['status'])) { ?>
+                    <p class="text-danger"><?=$this->errors['status']; ?></p>
+                    <?php } ?>
+                </div>
+            </div>
+            <?php } ?>
+
             <?php if($app['act'] !='view'){ ?>
             <div class="form-group row">
                 <div class="controls offset-md-3 col-md-9">
